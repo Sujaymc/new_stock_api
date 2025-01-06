@@ -12,7 +12,15 @@ object stock_to_hdfs {
       .getOrCreate()
 
     // Define the Kafka parameters
-    val kafkaBootstrapServers = "ip-172-31-8-235.eu-west-2.compute.internal:9092"
+    val kafkaParams = Map[String, Object](
+      "bootstrap.servers" -> "ip-172-31-8-235.eu-west-2.compute.internal:9092",
+      "key.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer",
+      "value.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer",
+      "group.id" -> "group1",
+      "auto.offset.reset" -> "earliest",
+      "enable.auto.commit" -> (false: java.lang.Boolean)
+    )
+    // Define the Kafka topic to subscribe to
     val topic = "sujay_stock1"
 
     // Define the schema for the JSON messages
@@ -35,9 +43,8 @@ object stock_to_hdfs {
     // Write the DataFrame as CSV files to HDFS, partitioned by formatted timestamp
     df.writeStream
       .format("csv")
-      .option("checkpointLocation", "/tmp/bigdata_nov_2024/sujay/checkpoint_stock")
-      .option("path", "/tmp/bigdata_nov_2024/sujay/data_stock")
-//      .partitionBy("formattedDate")
+      .option("checkpointLocation", "/tmp/bigdata_nov_2024/sujay/checkpoint_stock_new")
+      .option("path", "/tmp/bigdata_nov_2024/sujay/data_stock_new")
       .start()
       .awaitTermination()
   }
