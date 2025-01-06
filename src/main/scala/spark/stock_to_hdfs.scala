@@ -13,32 +13,21 @@ object stock_to_hdfs {
 
     // Define the Kafka parameters
     val kafkaBootstrapServers = "ip-172-31-8-235.eu-west-2.compute.internal:9092"
-    val kafkaTopic = "sujay_topic1"
+    val kafkaTopic = "sujay_stock1"
 
     // Define the schema for the JSON messages
     val schema = StructType(Seq(
-      StructField("bidSize", IntegerType, true),
-      StructField("askPrice", DoubleType, true),
-      StructField("volume", IntegerType, true),
-      StructField("askSize", IntegerType, true),
-      StructField("bidPrice", DoubleType, true),
+      StructField("symbol", StringType, true),
       StructField("lastSalePrice", DoubleType, true),
       StructField("lastSaleSize", IntegerType, true),
-      StructField("lastSaleTime", LongType, true),
-      StructField("fmpLast", DoubleType, true),
-      StructField("lastUpdated", LongType, true),
-      StructField("symbol", StringType, true)
+      StructField("volume", IntegerType, true),
+      StructField("askPrice", DoubleType, true),
+      StructField("bidPrice", DoubleType, true),
+      StructField("lastUpdated", LongType, true)
     ))
 
     // Read the JSON messages from Kafka as a DataFrame
-    val df = spark.readStream
-      .format("kafka")
-      .option("kafka.bootstrap.servers", kafkaBootstrapServers)
-      .option("subscribe", kafkaTopic)
-      .option("startingOffsets", "earliest")
-      .load()
-      .select(from_json(col("value").cast("string"), schema).as("data"))
-      .selectExpr("data.*")
+    val df = spark.readStream.format("kafka").option("kafka.bootstrap.servers", "ip-172-31-8-235.eu-west-2.compute.internal:9092").option("subscribe", topic).option("startingOffsets", "earliest").load().select(from_json(col("value").cast("string"), schema).as("data")).selectExpr("data.*")
 
     // Add a formatted timestamp column for partitioning
     val dfWithTimestamp = df.withColumn("formattedDate", date_format(current_timestamp(), "yyyy-MM-dd_HH-mm-ss"))
