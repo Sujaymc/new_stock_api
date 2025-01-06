@@ -25,13 +25,13 @@ object stock_to_hdfs {
 
     // Define the schema for the JSON messages
     val schema = StructType(Seq(
-      StructField("symbol", StringType, true),
-      StructField("lastSalePrice", DoubleType, true),
-      StructField("lastSaleSize", IntegerType, true),
-      StructField("volume", IntegerType, true),
-      StructField("askPrice", DoubleType, true),
-      StructField("bidPrice", DoubleType, true),
-      StructField("lastUpdated", LongType, true)
+      StructField("symbol", StringType, nullable = true),
+      StructField("lastSalePrice", DoubleType, nullable= true),
+      StructField("lastSaleSize", IntegerType, nullable = true),
+      StructField("volume", IntegerType, nullable = true),
+      StructField("askPrice", DoubleType, nullable = true),
+      StructField("bidPrice", DoubleType, nullable = true),
+      StructField("lastUpdated", LongType, nullable = true)
     ))
 
     // Read the JSON messages from Kafka as a DataFrame
