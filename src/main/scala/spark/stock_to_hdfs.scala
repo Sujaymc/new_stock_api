@@ -13,7 +13,7 @@ object stock_to_hdfs {
 
     // Define the Kafka parameters
     val kafkaBootstrapServers = "ip-172-31-8-235.eu-west-2.compute.internal:9092"
-    val kafkaTopic = "sujay_stock1"
+    val topic = "sujay_stock1"
 
     // Define the schema for the JSON messages
     val schema = StructType(Seq(
