@@ -43,8 +43,8 @@ object stock_to_hdfs {
     // Write the DataFrame as CSV files to HDFS, partitioned by formatted timestamp
     df.writeStream
       .format("csv")
-      .option("checkpointLocation", "/tmp/bigdata_nov_2024/sujay/checkpoint_stock_new")
-      .option("path", "/tmp/bigdata_nov_2024/sujay/data_stock_new")
+      .option("checkpointLocation", "/tmp/bigdata_nov_2024/sujay/stock_data/checkpoint")
+      .option("path", "/tmp/bigdata_nov_2024/sujay/stock_data/data")
       .start()
       .awaitTermination()
   }
