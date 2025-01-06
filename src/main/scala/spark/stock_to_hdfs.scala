@@ -30,15 +30,20 @@ object stock_to_hdfs {
     val df = spark.readStream.format("kafka").option("kafka.bootstrap.servers", "ip-172-31-8-235.eu-west-2.compute.internal:9092").option("subscribe", topic).option("startingOffsets", "earliest").load().select(from_json(col("value").cast("string"), schema).as("data")).selectExpr("data.*")
 
     // Add a formatted timestamp column for partitioning
-    val dfWithTimestamp = df.withColumn("formattedDate", date_format(current_timestamp(), "yyyy-MM-dd_HH-mm-ss"))
+//    val dfWithTimestamp = df.withColumn("formattedDate", date_format(current_timestamp(), "yyyy-MM-dd_HH-mm-ss"))
 
     // Write the DataFrame as CSV files to HDFS, partitioned by formatted timestamp
-    dfWithTimestamp.writeStream
+    df.writeStream
       .format("csv")
-      .option("checkpointLocation", "/tmp/bigdata_nov_2024/sujay/checkpoint_stock_list")
-      .option("path", "/tmp/bigdata_nov_2024/sujay/data_stock_list")
-      .partitionBy("formattedDate")
+      .option("checkpointLocation", "/tmp/bigdata_nov_2024/sujay/checkpoint_stock")
+      .option("path", "/tmp/bigdata_nov_2024/sujay/data_stock")
+//      .partitionBy("formattedDate")
       .start()
       .awaitTermination()
   }
 }
+
+
+//https://site.financialmodelingprep.com/developer/docs/all-realtime-full-prices-quote
+//mvn package
+//spark-submit --master local --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.7","com.lihaoyi:requests_2.11:0.7.1" --class spark.stock_to_hdfs target/new_stock_api-1.0-SNAPSHOT.jar
