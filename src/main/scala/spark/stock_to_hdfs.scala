@@ -11,7 +11,7 @@ object stock_to_hdfs {
       .master("local[*]")
       .getOrCreate()
 
-    // Define the Kafka parameters
+    // Define the Kafka parameters . Check ip!!
     val kafkaParams = Map[String, Object](
       "bootstrap.servers" -> "ip-172-31-8-235.eu-west-2.compute.internal:9092",
       "key.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer",
