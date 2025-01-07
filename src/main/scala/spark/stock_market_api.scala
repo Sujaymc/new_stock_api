@@ -50,7 +50,7 @@ object stock_market_api {
               .save()
 
       println("Message is loaded to Kafka topic")
-      Thread.sleep(10000) // Wait for 10 seconds before making the next call
+      Thread.sleep(5000) // Wait for 10 seconds before making the next call
     }
   }
 }
