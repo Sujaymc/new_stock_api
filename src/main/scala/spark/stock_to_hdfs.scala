@@ -21,7 +21,7 @@ object stock_to_hdfs {
       "enable.auto.commit" -> (false: java.lang.Boolean)
     )
     // Define the Kafka topic to subscribe to
-    val topic = "sujay_stock1"
+    val topic = "stock_new_topic"
 
     // Define the schema for the JSON messages
     val schema = StructType(Seq(
