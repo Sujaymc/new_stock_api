@@ -52,5 +52,6 @@ object stock_to_hdfs {
 
 
 //https://site.financialmodelingprep.com/developer/docs/all-realtime-full-prices-quote
+//Jenkins : stock_tohdfs
 //mvn package
 //spark-submit --master local --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.7","com.lihaoyi:requests_2.11:0.7.1" --class spark.stock_to_hdfs target/new_stock_api-1.0-SNAPSHOT.jar
