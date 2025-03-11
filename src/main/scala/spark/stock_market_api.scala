@@ -39,7 +39,7 @@ object stock_market_api {
 
       // Kafka server and topic name assignment
             val kafkaServer: String = "ip-172-31-8-235.eu-west-2.compute.internal:9092" //Check IP address
-            val topicSampleName: String = "stock_new_topic" // Your Kafka topic name
+            val topicSampleName: String = "api_read" // Your Kafka topic name
 
       // Write data to Kafka
             stockDF.selectExpr("CAST(symbol AS STRING) AS key", "to_json(struct(*)) AS value")
